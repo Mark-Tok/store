@@ -9,11 +9,13 @@ import { addToCart } from './../../store/cart/actions'
 
 
 function ListProducts(props) {
+	
     let { id } = useParams();
+	
     let addToCart = (item) => {
         props.addToCart(item)
     }
-    console.log(id)
+	
     if (id === 'phone') {
         return (
             <div className="container">
