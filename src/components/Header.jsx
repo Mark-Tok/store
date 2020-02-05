@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Link,
 } from "react-router-dom";
 import Cart from './Cart'
 import { connect } from 'react-redux';
 
-function Header(props) {
+function Header() {
 
-    const total = () => {
-        return props.cart.reduce((sum, current) => {
-            return sum + current.price;
-        }, 0);
-    }
+    const [fixState, toggleFix] = useState('');
+
+    useEffect(
+        window.onscroll = () => {
+            if (window.pageYOffset >= 184 && document.documentElement.clientWidth >= 770) {
+                toggleFix('fixState')
+            }
+            else {
+                toggleFix('')
+            }
+        })
 
     return (
-        <div className='col-md-10 header'>
-            <div className="header__info">
+        <div className='col-md-12 header'>
+            <div className='header__info'>
                 <div className="header__logo">
                     <Link to="/"> <img src={require('../images/logo.png')} alt="logo" /> </Link>
                 </div>
@@ -28,7 +34,7 @@ function Header(props) {
                         </div>
                 </div>
             </div>
-            <ul>
+            <ul className={`${fixState}`}>
                 <li>
                     <Link to="/phone">Смартфоны</Link>
                 </li>
@@ -42,17 +48,7 @@ function Header(props) {
                     <Link to="/audio">Аудио</Link>
                 </li>
                 <li>
-                <div className="cart">
-                    <div className="cart__wrapper">
-                        <div className="cart__title">
-                            Корзина <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </div>
-                        <Cart />
-                        <div className="cart__total">
-                            Сумма: {total()} <i className="fa fa-rub" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
+                    <Cart />
                 </li>
             </ul>
         </div>

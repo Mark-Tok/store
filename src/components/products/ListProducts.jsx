@@ -1,5 +1,5 @@
 import React from "react";
-import data from '../../data.json'
+import data from '../../data.js'
 import {
     useParams,
     Link,
@@ -7,120 +7,50 @@ import {
 import { connect } from 'react-redux';
 import { addToCart } from './../../store/cart/actions'
 
+const { phone, tv, audio, showcase, laptop } = data;
 
-function ListProducts(props) {
-	
-    let { id } = useParams();
-	
-    let addToCart = (item) => {
-        props.addToCart(item)
-    }
-	
-    if (id === 'phone') {
-        return (
-            <div className="container">
-                <div className="row list">
-                    {
-                        data.products[0].phone.map((item) => {
-                            return <div key={item.id} className="col-md-4 col-sm-6 list__wrapper"> <div className="list__item">
-                                <div className="item__images"><img alt={item.title} src={require("../../images" + item.img)} /></div>
-                                <div className="item__title"><Link to={'/phone/' + item.id}>{item.title}</Link></div>
-                                <div className="item__price">{item.price} <i className="fa fa-rub" aria-hidden="true"></i></div>
-                                <div className="item__button"><button onClick={() => { addToCart(item) }}>Добавить</button></div>
-                            </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
-        );
-    }
-    else if (id === 'tv') {
-        return (
-            <div className="container">
-                <div className="row list">
-                    {
-                        data.products[1].tv.map((item) => {
-                            return <div key={item.id} className="col-md-4 col-sm-6 list__wrapper">  <div className="list__item">
-                                <div className="item__images"><img alt={item.title} src={require("../../images" + item.img)} /></div>
-                                <div className="item__title"><Link to={'/tv/' + item.id}>{item.title}</Link></div>
-                                <div className="item__price">{item.price} <i className="fa fa-rub" aria-hidden="true"></i></div>
-                                <div className="item__button"><button onClick={() => { addToCart(item) }}>Добавить</button></div>
-                            </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
-        )
-    }
-    else if (id === 'laptop') {
-        return (
-            <div className="container">
-                <div className="row list">
-                    {
-                        data.products[2].laptop.map((item) => {
-                            return <div className="col-md-4 col-sm-6 list__wrapper" key={item.id}>  <div className="list__item">
-                                <div className="item__images"><img alt={item.title} src={require("../../images" + item.img)} /></div>
-                                <div className="item__title"><Link to={'/laptop/' + item.id}>{item.title}</Link></div>
-                                <div className="item__price">{item.price} <i className="fa fa-rub" aria-hidden="true"></i></div>
-                                <div className="item__button"><button onClick={() => { addToCart(item) }}>Добавить</button></div>
-                            </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
-        )
-    }
-    else if (id === 'audio') {
-        return (
-            <div className="container">
-                <div className="row list">
-                    {
-                        data.products[3].audio.map((item) => {
-                            return <div key={item.id} className="col-md-4 col-sm-6 list__wrapper">  <div className="list__item">
-                                <div className="item__images"><img alt={item.title} src={require("../../images" + item.img)} /></div>
-                                <div className="item__title"><Link to={'/audio/' + item.id}>{item.title}</Link></div>
-                                <div className="item__price">{item.price} <i className="fa fa-rub" aria-hidden="true"></i></div>
-                                <div className="item__button"><button onClick={() => { addToCart(item) }}>Добавить</button></div>
-                            </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div className="container">
-                <div className="row list">
-                    {
-                        data.products[4].showcase.map((item) => {
-                            return <div className="col-md-4 col-sm-6 list__wrapper" key={item.id}>  <div className="list__item item">
-                                <div className="item__images"><img alt={item.title} src={require("../../images" + item.img)} /></div>
-                                <div className="item__title"><Link to={'/showcase/' + item.id}>{item.title}</Link></div>
-                                <div className="item__price">{item.price} <i className="fa fa-rub" aria-hidden="true"></i></div>
-                                <div className="item__button"><button onClick={() => { addToCart(item) }}>Добавить</button></div>
-                            </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
-        )
-    }
+const listProducts = (product, link, addToCart) => {
+    return <div className="container">
+        <div className="row list">
+            {
+                product.map((item) => {
+                    return <div key={item.id} className="col-md-4 col-sm-6 list__wrapper"> <div className="list__item">
+                        <div className="item__images"><img alt={item.title} src={require("../../images" + item.img)} /></div>
+                        <div className="item__title"><Link to={link + item.id}>{item.title}</Link></div>
+                        <div className="item__price">{item.price} <i className="fa fa-rub" aria-hidden="true"></i></div>
+                        <div className="item__button"><button onClick={() => { addToCart(item) }}>Добавить</button></div>
+                    </div>
+                    </div>
+                })
+            }
+        </div>
+    </div>
 }
 
-const mapStateToProps = (state) => {
-    return {
-        cart: state,
+function ListProducts(props) {
+
+    const { id } = useParams();
+
+    const addToCart = (item) => {
+        props.addToCart(item)
+    }
+
+    switch (id) {
+        case 'phone':
+            return listProducts(phone, '/phone/', addToCart);
+        case 'tv':
+            return listProducts(tv, '/tv/', addToCart);
+        case 'laptop':
+            return listProducts(laptop, '/laptop/', addToCart);
+        case 'audio':
+            return listProducts(audio, '/audio/', addToCart);
+        default:
+            return listProducts(showcase, '/showcase/', addToCart);
     }
 }
 
 const mapActionToProps = {
-    addToCart,
+    addToCart
 }
 
-export default connect(mapStateToProps, mapActionToProps)(ListProducts);
+export default connect(null, mapActionToProps)(ListProducts);

@@ -7,9 +7,8 @@ import {
 import ListProducts from './products/ListProducts'
 import PageProduct from './products/PageProduct'
 import Header from './Header'
-import { connect } from 'react-redux';
 
-function Store(props) {
+function Store() {
     return (
         <div className='store'>
             <div className="container">
@@ -17,7 +16,7 @@ function Store(props) {
                     <Router>
                         <Header />
                         <div className="row store__cart-list-block">
-                            <div className="col-md-10">
+                            <div className="col-md-12">
                                 <Switch>
                                     <Route path={["/tv/:id", "/audio/:id", "/laptop/:id", "/phone/:id", "/showcase/:id"]} component={PageProduct} />
                                     <Route path={["/:id", "/"]} component={ListProducts} />     
@@ -31,10 +30,4 @@ function Store(props) {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        cart: state,
-    }
-}
-
-export default connect(mapStateToProps)(Store);
+export default Store;

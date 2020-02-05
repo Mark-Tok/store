@@ -47,8 +47,17 @@ code {
 
     li {
       list-style: none;
-      padding: 2%;
+      height:60px;
+      line-height: 3.1;
       font-size: 18px;
+
+      &:last-child {
+        cursor: pointer;
+        &:hover {
+          background: #ddcb07;
+          transition: 0.3s;
+        }
+    }
 
       a {
         color: black;
@@ -105,7 +114,7 @@ code {
     text-align: center;
 
     button {
-      background: #ffea00;
+      background: #ffb100;
       border: none;
       padding: 4% 18%;
       color: black;
@@ -126,13 +135,25 @@ code {
 }
 
 .cart {
+  width: 100%;
+    height: 100%;
   &__inner {
     max-height: 200px;
     overflow: auto;
     overflow-x: hidden;
     min-height: 0px;
     background: white;
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    width:183px;
   }
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 
   &__item {
     background: white;
@@ -157,26 +178,32 @@ code {
     justify-content: center;
   }
 
-  &__title {
-    background: #ffea00;
-    padding: 19px;
-  }
-
   &__total {
     padding: 13px;
     font-size: 17px;
   }
 
-  &__wrapper {
-    position: fixed;
-    max-width: 17%;
-    margin-left: 3.5%;
-    margin-top: -17px;  
-
-    @media screen and (max-width: 768px) {
-      position: relative;
-      max-width: 100%;
+  &__title{
+    width: 100%;
+    height: 100%;
+    i {
+      font-size: 25px;
     }
+  .total {
+    padding-left:10px;
+    i {
+      display: inline ;
+      font-size:16px;
+    }
+  }
+  .total_mark {
+    background: red;
+    color: white;
+    border-radius: 100px;
+    font-size: 13px;
+    padding: 0px 5px;
+    margin-left: -8px;
+}
   }
 }
 
@@ -231,4 +258,20 @@ code {
     flex-direction: column-reverse;
     margin-top: 10px;
   }
+}
+
+.fixState {
+  position: fixed;
+    width: 100%;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    top: 0;
+    justify-content: center !important;
+    li {
+      padding: 0 3%;
+      &:last-child {
+        padding: 0;
+      }
+    }
 }
